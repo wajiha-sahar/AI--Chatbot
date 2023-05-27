@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ask a Question about Gatsby</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault(); // Prevent form submission
+                var question = $('#question').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/ask',
+                    data: {question: question},
+                    success: function(response) {
+                        var prettyResponse = JSON.stringify(response, null, 2);
+                        $('#response').html('<pre>' + prettyResponse + '</pre>');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Ask a Question about Gatsby</h1>
+    <form>
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="response"></div>
+</body>
+</html>
